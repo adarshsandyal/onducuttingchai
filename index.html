@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ಕನ್ನಡ ಚಹಾ ಅಂಗಡಿ ಪ್ಲೇಲಿಸ್ಟ್ - Kannada Chai Angadi Playlist</title>
+    <!-- Google Fonts for Baloo Tamma 2 (Kannada) and Outfit (English Layout) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600;800&family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fullscreen Looping Video Background -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="Prompt_to_generate_a_sec.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Ambient Vignette Overlay to enhance contrast and warmth -->
+    <div class="vignette-overlay" id="vignette"></div>
+
+    <!-- Floating Background Particles (Warm Chai Steam Dust) -->
+    <div class="particle-container" id="particle-container"></div>
+
+    <!-- Start Overlay Screen (Required for audio initialization) -->
+    <div class="start-overlay" id="start-overlay">
+        <div class="start-card">
+            <div class="start-kettle-icon">
+                <svg viewBox="0 0 100 100" class="kettle-svg">
+                    <!-- Retro Indian Kettle -->
+                    <path d="M50 20 C65 20, 75 30, 75 45 C75 52, 70 58, 65 60 C63 65, 58 75, 50 75 C42 75, 37 65, 35 60 C30 58, 25 52, 25 45 C25 30, 35 20, 50 20 Z" fill="none" stroke="#F5A623" stroke-width="3"/>
+                    <path d="M50 20 L50 10" fill="none" stroke="#F5A623" stroke-width="3"/>
+                    <circle cx="50" cy="8" r="3" fill="#F5A623"/>
+                    <!-- Handle -->
+                    <path d="M38 20 C20 15, 20 50, 30 55" fill="none" stroke="#F5A623" stroke-width="3"/>
+                    <!-- Spout -->
+                    <path d="M68 40 C75 42, 85 30, 85 25 L85 20 L80 20 C78 25, 73 35, 68 37" fill="none" stroke="#F5A623" stroke-width="3"/>
+                    <!-- Tea drops -->
+                    <circle cx="89" cy="27" r="1.5" class="drip drip-1" fill="#F5A623"/>
+                    <circle cx="92" cy="35" r="1.5" class="drip drip-2" fill="#F5A623"/>
+                </svg>
+            </div>
+            <h2 class="kannada-welcome-title">ಬಿಸಿ ಬಿಸಿ ಚಹಾ & ಇಂಪಾದ ಸಂಗೀತ</h2>
+            <h1 class="main-title">Kannada Chai Angadi</h1>
+            <p class="subtitle">Step into a cozy local tea stall. Mix ambient rain and boiling tea sounds with your favorite melodies.</p>
+            
+            <button id="start-btn" class="pulse-button">
+                <span>Start Listening</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Application Interface -->
+    <div class="app-layout hidden" id="app-layout">
+        <!-- Floating Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <div class="logo-circle">
+                    <!-- Steaming cup icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2">
+                        <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+                        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+                        <line x1="6" y1="2" x2="6" y2="5"/>
+                        <line x1="10" y1="2" x2="10" y2="5"/>
+                        <line x1="14" y1="2" x2="14" y2="5"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-kn">ಕನ್ನಡ ಚಹಾ ಅಂಗಡಿ</span>
+                    <span class="logo-en">chai angadi playlist</span>
+                </div>
+            </div>
+            
+            <!-- Global Sound Controller -->
+            <div class="global-audio-toggle">
+                <button id="master-mute-btn" class="mute-btn" title="Mute/Unmute All Sounds">
+                    <svg id="speaker-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    <span>Mute Ambience</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Grid Content -->
+        <main class="grid-container">
+            <!-- LEFT PANEL: Music Embed -->
+            <section class="grid-card music-card">
+                <div class="card-header">
+                    <span class="card-badge green">ಮ್ಯೂಸಿಕ್ ಪ್ಲೇಯರ್</span>
+                    <h3>Spotify Playlist</h3>
+                    <p class="card-desc">Savor these beautiful Kannada tunes curated for you</p>
+                </div>
+                
+                <div class="spotify-embed-container">
+                    <!-- Spotify Player Iframe -->
+                    <iframe 
+                        src="https://open.spotify.com/embed/playlist/3W98aZG4h5V12Sy4eI87T1?utm_source=generator&theme=0" 
+                        width="100%" 
+                        height="380" 
+                        frameBorder="0" 
+                        allowfullscreen="" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- MIDDLE PANEL: Interactive Tea Glass & Cozy Quotes -->
+            <section class="grid-card tea-card">
+                <div class="card-header center-align">
+                    <span class="card-badge gold">ಚಹಾ ವಿರಾಮ</span>
+                    <h3>Chai Experience</h3>
+                </div>
+
+                <div class="interactive-tea-container">
+                    <!-- Rising Steam Visualizer (HTML canvas / CSS particles) -->
+                    <div class="steam-container" id="steam-container">
+                        <div class="steam-line line-1"></div>
+                        <div class="steam-line line-2"></div>
+                        <div class="steam-line line-3"></div>
+                    </div>
+                    
+                    <!-- Cutting Chai Glass SVG -->
+                    <div class="glass-clicker-wrapper" id="glass-clicker">
+                        <svg viewBox="0 0 120 180" class="chai-glass-svg">
+                            <!-- Shadow -->
+                            <ellipse cx="60" cy="155" rx="35" ry="8" fill="rgba(0, 0, 0, 0.4)" />
+                            
+                            <!-- Glass base structure -->
+                            <path d="M40 150 L30 60 L90 60 L80 150 Z" fill="rgba(255, 255, 255, 0.15)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2"/>
+                            
+                            <!-- Hot Chai Liquid Level -->
+                            <path d="M34 110 L31 70 L89 70 L86 110 Z" fill="#C05C3B" class="chai-liquid" />
+                            <path d="M37 140 L34 110 L86 110 L83 140 Z" fill="#994528" class="chai-liquid-deep" />
+                            
+                            <!-- Liquid Top Curve -->
+                            <ellipse cx="60" cy="70" rx="28" ry="4" fill="#E67E22" class="chai-liquid-surface" />
+                            
+                            <!-- Cutting Glass Vertical Grooves -->
+                            <line x1="45" y1="60" x2="52" y2="150" stroke="rgba(255, 255, 255, 0.25)" stroke-width="2"/>
+                            <line x1="60" y1="60" x2="60" y2="150" stroke="rgba(255, 255, 255, 0.25)" stroke-width="2"/>
+                            <line x1="75" y1="60" x2="68" y2="150" stroke="rgba(255, 255, 255, 0.25)" stroke-width="2"/>
+                            
+                            <!-- Highlight glares -->
+                            <path d="M31 65 L33 90" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                            
+                            <!-- Metal Stand Rim Holder (Stylized background) -->
+                            <path d="M22 65 C22 65, 60 70, 98 65" fill="none" stroke="rgba(245, 166, 35, 0.3)" stroke-width="3"/>
+                        </svg>
+                        <span class="click-prompt">Click to Brew/Slurp</span>
+                    </div>
+                </div>
+
+                <!-- Kannada Quote Slider/Carousel -->
+                <div class="quotes-carousel-wrapper">
+                    <div class="quote-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                            <path d="M14.017 21v-7.391c0-5.704 3.748-9.762 9-10.161l.429.893c-3.762 1.458-5.429 4.18-5.429 7.428h5v9.231h-9zm-14 0v-7.391c0-5.704 3.748-9.762 9-10.161l.429.893c-3.762 1.458-5.429 4.18-5.429 7.428h5v9.231h-9z"/>
+                        </svg>
+                    </div>
+                    <div class="quote-text-container">
+                        <p class="quote-kannada" id="quote-kn">ಬಿಸಿ ಬಿಸಿ ಚಹಾ ಮತ್ತು ಇಂಪಾದ ಸಂಗೀತ, ಮನಸ್ಸಿಗೆ ನೆಮ್ಮದಿ.</p>
+                        <p class="quote-translation" id="quote-en">"Hot tea and melodious music, true peace of mind."</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: Ambient Sound Mixer & Presets -->
+            <section class="grid-card mixer-card">
+                <div class="card-header">
+                    <span class="card-badge orange">ಧ್ವನಿ ಮಿಶ್ರಣ</span>
+                    <h3>Ambient Mixer</h3>
+                    <p class="card-desc">Blend standard tea stall sounds to find your calm</p>
+                </div>
+
+                <!-- Custom Mix Sliders -->
+                <div class="mixer-sliders-list">
+                    <!-- Slider 1: Rain -->
+                    <div class="slider-row">
+                        <div class="slider-label">
+                            <div class="slider-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="14"></line><line x1="12" y1="14" x2="16" y2="10"></line><line x1="12" y1="14" x2="8" y2="10"></line></svg>
+                            </div>
+                            <span>Rainfall (ಮಳೆ)</span>
+                        </div>
+                        <div class="slider-control-wrapper">
+                            <input type="range" id="rain-slider" min="0" max="100" value="40" class="custom-slider">
+                            <span class="slider-val" id="rain-val">40%</span>
+                        </div>
+                    </div>
+
+                    <!-- Slider 2: Simmering Tea -->
+                    <div class="slider-row">
+                        <div class="slider-label">
+                            <div class="slider-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22h20"></path><path d="M5 22V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17"></path><path d="M12 18h.01"></path></svg>
+                            </div>
+                            <span>Tea Simmer (ಚಹಾ ಕುದಿಯುವಿಕೆ)</span>
+                        </div>
+                        <div class="slider-control-wrapper">
+                            <input type="range" id="simmer-slider" min="0" max="100" value="30" class="custom-slider">
+                            <span class="slider-val" id="simmer-val">30%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme Presets Switcher -->
+                <div class="theme-presets-section">
+                    <h4>Mood Presets (ಮೂಡ್ ಸೆಟ್ಟಿಂಗ್ಸ್)</h4>
+                    <div class="presets-buttons-grid">
+                        <button class="preset-btn active" id="preset-morning" data-preset="morning">
+                            <span class="preset-icon">🌅</span>
+                            <div class="preset-text">
+                                <span class="preset-title-kn">ಬೆಳಗಿನ ಚಹಾ</span>
+                                <span class="preset-title-en">Morning Gold</span>
+                            </div>
+                        </button>
+                        
+                        <button class="preset-btn" id="preset-rainy" data-preset="rainy">
+                            <span class="preset-icon">🌧️</span>
+                            <div class="preset-text">
+                                <span class="preset-title-kn">ಮಳೆಗಾಲದ ಮಧ್ಯಾಹ್ನ</span>
+                                <span class="preset-title-en">Rainy Afternoon</span>
+                            </div>
+                        </button>
+                        
+                        <button class="preset-btn" id="preset-midnight" data-preset="midnight">
+                            <span class="preset-icon">🌌</span>
+                            <div class="preset-text">
+                                <span class="preset-title-kn">ರಾತ್ರಿ ಅಂಗಳ</span>
+                                <span class="preset-title-en">Cozy Midnight</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Subtle overlay notifications -->
+        <div class="toast-notification" id="toast">Chai topped up! ☕</div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Designed with warm colors and love for Kannada melodies. Click the glass to brew the perfect tea.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script src="app.js"></script>
+</body>
+</html>
