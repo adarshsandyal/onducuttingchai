@@ -514,3 +514,26 @@ function createFloatingDust() {
         particleContainer.appendChild(dust);
     }
 }
+
+// --- Toggle Music Station Players (YouTube / Spotify) ---
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        // Remove active class from all tab buttons
+        document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+        
+        // Hide all player containers
+        document.querySelectorAll('.player-embed-container').forEach(pc => {
+            pc.style.display = 'none';
+            pc.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        // Show target player container
+        const targetId = btn.getAttribute('data-target');
+        const targetContainer = document.getElementById(targetId);
+        targetContainer.style.display = 'block';
+        targetContainer.classList.add('active');
+    });
+});

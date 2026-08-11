@@ -88,18 +88,39 @@
             <section class="grid-card music-card">
                 <div class="card-header">
                     <span class="card-badge green">ಮ್ಯೂಸಿಕ್ ಪ್ಲೇಯರ್</span>
-                    <h3>Spotify Playlist</h3>
-                    <p class="card-desc">Savor these beautiful Kannada tunes curated for you</p>
+                    <h3>Music Station</h3>
+                    
+                    <!-- Player Tabs Switcher -->
+                    <div class="player-tabs">
+                        <button class="tab-btn active" data-target="youtube-container">
+                            <span>YouTube Radio</span>
+                        </button>
+                        <button class="tab-btn" data-target="spotify-container">
+                            <span>Spotify Playlist</span>
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="spotify-embed-container">
-                    <!-- Spotify Player Iframe -->
+                <!-- YouTube Music Player -->
+                <div class="player-embed-container active" id="youtube-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/videoseries?list=PLdqdWaeGdXFk" 
+                        width="100%" 
+                        height="380" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen 
+                        loading="lazy">
+                    </iframe>
+                </div>
+
+                <!-- Spotify Player -->
+                <div class="player-embed-container" id="spotify-container" style="display: none;">
                     <iframe 
                         src="https://open.spotify.com/embed/playlist/3W98aZG4h5V12Sy4eI87T1?utm_source=generator&theme=0" 
                         width="100%" 
                         height="380" 
                         frameBorder="0" 
-                        allowfullscreen="" 
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                         loading="lazy">
                     </iframe>
