@@ -270,13 +270,15 @@ simmerSlider.addEventListener('input', (e) => {
 
 function updateRainGain() {
     if (!audioCtx || !rainGainNode) return;
-    // Smooth ramp to avoid clicks
-    rainGainNode.gain.setTargetAtTime(rainVolume, audioCtx.currentTime, 0.08);
+    // Set anchor value at current time then ramp smoothly
+    rainGainNode.gain.setValueAtTime(rainGainNode.gain.value, audioCtx.currentTime);
+    rainGainNode.gain.linearRampToValueAtTime(rainVolume, audioCtx.currentTime + 0.1);
 }
 
 function updateSimmerGain() {
     if (!audioCtx || !simmerGainNode) return;
-    simmerGainNode.gain.setTargetAtTime(simmerVolume, audioCtx.currentTime, 0.08);
+    simmerGainNode.gain.setValueAtTime(simmerGainNode.gain.value, audioCtx.currentTime);
+    simmerGainNode.gain.linearRampToValueAtTime(simmerVolume, audioCtx.currentTime + 0.1);
 }
 
 // --- Master Mute Ambience ---
@@ -287,8 +289,10 @@ masterMuteBtn.addEventListener('click', () => {
     isMuted = !isMuted;
     
     if (isMuted) {
-        // Ramp master gain to 0
-        masterGainNode.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.15);
+        // Ramp master gain to 0 cleanly
+        masterGainNode.gain.setValueAtTime(masterGainNode.gain.value, audioCtx.currentTime);
+        masterGainNode.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 0.15);
+        
         masterMuteBtn.classList.add('muted');
         masterMuteBtn.querySelector('span').textContent = "Unmute Ambience";
         // Update speaker icon to muted (no waves)
@@ -298,8 +302,10 @@ masterMuteBtn.addEventListener('click', () => {
         if (audioCtx.state === 'suspended') {
             audioCtx.resume();
         }
-        // Ramp master gain to 1
-        masterGainNode.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.15);
+        // Ramp master gain to 1 cleanly
+        masterGainNode.gain.setValueAtTime(masterGainNode.gain.value, audioCtx.currentTime);
+        masterGainNode.gain.linearRampToValueAtTime(1.0, audioCtx.currentTime + 0.15);
+        
         masterMuteBtn.classList.remove('muted');
         masterMuteBtn.querySelector('span').textContent = "Mute Ambience";
         // Update speaker icon to active
@@ -354,7 +360,10 @@ function applyPreset(presetKey, immediate = false) {
     // 4. Update audio gains with transition
     if (isAudioInitialized && audioCtx) {
         const rampDuration = immediate ? 0.01 : 1.5;
+        rainGainNode.gain.setValueAtTime(rainGainNode.gain.value, audioCtx.currentTime);
         rainGainNode.gain.linearRampToValueAtTime(rainVolume, audioCtx.currentTime + rampDuration);
+        
+        simmerGainNode.gain.setValueAtTime(simmerGainNode.gain.value, audioCtx.currentTime);
         simmerGainNode.gain.linearRampToValueAtTime(simmerVolume, audioCtx.currentTime + rampDuration);
     }
     
