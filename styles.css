@@ -478,44 +478,58 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* --- Music Panel (Tabbed Embeds) --- */
-.player-tabs {
+.music-header-row {
     display: flex;
-    gap: 8px;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 4px;
-    border-radius: 30px;
-    margin-top: 12px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
+.header-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 3px;
+    border-radius: 30px;
+    width: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
 .tab-btn {
-    flex: 1;
     background: transparent;
-    border: none;
-    padding: 8px 12px;
+    border: 1px solid transparent;
+    padding: 6px 14px;
     border-radius: 20px;
     color: var(--color-text-muted);
     font-family: var(--font-english);
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.78rem;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition-smooth);
     display: flex;
     justify-content: center;
     align-items: center;
+    white-space: nowrap;
 }
 
 .tab-btn:hover {
     color: var(--color-text-light);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .tab-btn.active {
     color: var(--accent-gold);
-    background: rgba(245, 166, 35, 0.1);
-    box-shadow: inset 0 0 8px rgba(245, 166, 35, 0.05);
-    border: 1.5px solid rgba(245, 166, 35, 0.2);
+    background: rgba(245, 166, 35, 0.15);
+    box-shadow: 0 0 10px rgba(245, 166, 35, 0.1), inset 0 0 5px rgba(245, 166, 35, 0.05);
+    border-color: rgba(245, 166, 35, 0.35);
 }
 
 .player-embed-container {
